@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     private bool isTouchingGround;
 
-    //add in player animation here
+    //link animator component to player
+    private Animator playerAnimation;
 
     //this is for respawn after falling
     private Vector3 respawnPoint;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        playerAnimation = GetComponent<Animator>();
         respawnPoint = transform.position;
     }
 
@@ -38,10 +40,12 @@ public class PlayerController : MonoBehaviour
         if(direction > 0f)
         {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
+            transform.localScale = new Vector2(0.4114183f,0.4114183f);
             transform.localScale = new Vector2(0.4114183f, 0.4114183f);
         } else if (direction < 0f)
         {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
+            transform.localScale = new Vector2(-0.4114183f,0.4114183f);
             transform.localScale = new Vector2(-0.4114183f, 0.4114183f);
         } else
         {
@@ -53,6 +57,8 @@ public class PlayerController : MonoBehaviour
             player.velocity = new Vector2(player.velocity.x, jumpSpeed);
         }
 
+        playerAnimation.SetFloat("Speed", Mathf.Abs(player.velocity.x));
+        playerAnimation.SetBool("OnGround", isTouchingGround);
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
     }
 
