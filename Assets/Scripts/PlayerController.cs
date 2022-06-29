@@ -14,10 +14,17 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     private bool isTouchingGround;
 
+    //add in player animation here
+
+    //this is for respawn after falling
+    private Vector3 respawnPoint;
+    public GameObject fallDetector;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
@@ -43,6 +50,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isTouchingGround)
         {
             player.velocity = new Vector2(player.velocity.x, jumpSpeed);
+        }
+
+        fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "FallDetector")
+        {
+            transform.position = respawnPoint;
         }
     }
 }
