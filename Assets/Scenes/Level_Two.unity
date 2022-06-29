@@ -911,6 +911,7 @@ GameObject:
   - component: {fileID: 885676562}
   - component: {fileID: 885676563}
   - component: {fileID: 885676564}
+  - component: {fileID: 885676565}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1027,6 +1028,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   fallDetector: {fileID: 1521254178}
+  playfabManager: {fileID: 0}
 --- !u!70 &885676563
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1063,6 +1065,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &885676565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885676557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8174ca1fdacf64edfb91a6be13cdfd2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &938112864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,7 +1932,7 @@ GameObject:
   - component: {fileID: 2004737387}
   m_Layer: 0
   m_Name: PortalOn
-  m_TagString: NextLevel
+  m_TagString: GameOver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using PlayFab;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,11 +25,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 respawnPoint;
     public GameObject fallDetector;
 
+    //maxPlatform is for leaderboard things
+    public PlayFabManager playfabManager;
+    private int maxPlatform = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
+        playfabManager = GetComponent<PlayFabManager>();
         respawnPoint = transform.position;
     }
 
@@ -41,12 +49,12 @@ public class PlayerController : MonoBehaviour
         {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
             transform.localScale = new Vector2(0.4114183f,0.4114183f);
-            transform.localScale = new Vector2(0.4114183f, 0.4114183f);
+            //transform.localScale = new Vector2(0.4114183f, 0.4114183f);
         } else if (direction < 0f)
         {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
             transform.localScale = new Vector2(-0.4114183f,0.4114183f);
-            transform.localScale = new Vector2(-0.4114183f, 0.4114183f);
+            //transform.localScale = new Vector2(-0.4114183f, 0.4114183f);
         } else
         {
             player.velocity = new Vector2(0, player.velocity.y);
@@ -76,11 +84,20 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             respawnPoint = transform.position;
+            maxPlatform++;
         }
         else if(collision.tag =="PreviousLevel")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             respawnPoint = transform.position;
+            maxPlatform--;
         }
+        else if(collision.tag == "GameOver")
+        {
+            this.GameOver();
+        }
+    }
+    public void GameOver(){
+        playfabManager.SendLeaderboard(maxPlatform);
     }
 }

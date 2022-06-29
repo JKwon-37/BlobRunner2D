@@ -8,6 +8,7 @@ TagManager:
   - Checkpoint
   - NextLevel
   - PreviousLevel
+  - GameOver
   layers:
   - Default
   - TransparentFX
