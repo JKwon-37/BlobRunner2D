@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class UIController : MonoBehaviour
 {
+    //showing leaderboard things
+    public PlayFabManager playfabManager;
+
     //start game ui
     public Button startButton;
     public Button loginButton;
@@ -35,6 +40,9 @@ public class UIController : MonoBehaviour
             replayButton.clicked += ReplayButtonPressed;
             leaderboardButton.clicked += LeaderboardButtonPressed;
         }
+        if(GameObject.Find("stats") != null){
+            playfabManager = GameObject.Find("stats").GetComponent<PlayFabManager>();
+        }
     }
 
     void StartButtonPressed()
@@ -55,7 +63,32 @@ public class UIController : MonoBehaviour
 
     void LeaderboardButtonPressed()
     {
-        errorText.text = "Leaderboard button pressed";
-        errorText.style.display = DisplayStyle.Flex;
+        GetLeaderboard();
+        //errorText.style.display = DisplayStyle.Flex;
+    }
+
+    public void GetLeaderboard()
+    {
+        var request = new GetLeaderboardRequest
+        {
+            StatisticName = "PlatformScore",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
+    }
+
+    void OnLeaderboardGet(GetLeaderboardResult result)
+    {
+        foreach (var item in result.Leaderboard)
+        {
+            Debug.Log($"{item.PlayFabId} {item.StatValue}");
+        }
+    }
+
+    void OnError(PlayFabError error)
+    {
+        Debug.Log("Error while getting stats");
+        Debug.Log(error.GenerateErrorReport());
     }
 }
