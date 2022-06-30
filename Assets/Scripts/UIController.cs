@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour
         if(loginButton != null){
             registerButton.clicked += RegisterButtonPressed;
             loginButton.clicked += LoginButtonPressed;
-            //resetPasswordButton.clicked += ResetPasswordButtonPressed;
+            resetPasswordButton.clicked += ResetPasswordButtonPressed;
         }
 
         replayButton = root.Q<Button>("Replay");
@@ -65,16 +65,6 @@ public class UIController : MonoBehaviour
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
         //SceneManager.LoadScene("Level_One");
     }
-
-    void OnRegisterSuccess(RegisterPlayFabUserResult result){
-        errorText.text = "Registered and logged in, will redirect to start game";
-        SceneManager.LoadScene("Level_One");
-    }
-
-    void OnLoginSuccess(LoginResult result){
-    errorText.text = "logged in, will redirect to start game";
-    SceneManager.LoadScene("Level_One");
-    }
     void LoginButtonPressed()
     {
         var request = new LoginWithEmailAddressRequest();
@@ -83,6 +73,29 @@ public class UIController : MonoBehaviour
             request.TitleId = "DC319";
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
     }
+
+    void ResetPasswordButtonPressed()
+    {
+        var request = new SendAccountRecoveryEmailRequest();
+            request.Email = playfabManager.emailInput.text;
+            request.TitleId = "DC319";
+        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnResetPWSuccess, OnError);
+    }
+
+    void OnRegisterSuccess(RegisterPlayFabUserResult result){
+        errorText.text = "Registered and logged in, will redirect to start game";
+        SceneManager.LoadScene("Level_One");
+    }
+
+    void OnLoginSuccess(LoginResult result){
+        errorText.text = "logged in, will redirect to start game";
+        SceneManager.LoadScene("Level_One");
+    }
+
+    void OnResetPWSuccess(SendAccountRecoveryEmailResult result){
+        errorText.text = "pw reset email sent";
+    }
+
 
     void ReplayButtonPressed()
     {
