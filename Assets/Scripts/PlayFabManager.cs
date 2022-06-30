@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.UIElements;
 
 public class PlayFabManager : MonoBehaviour
 {
+    //login and regs things
+    public TextField emailInput;
+    public TextField passwordInput;
+
     // Start is called before the first frame update
     void Start()
     {
-        Login();
+        //Login();
     }
 
     // Login for user login

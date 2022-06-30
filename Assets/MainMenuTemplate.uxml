@@ -1,11 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=d461998965fad4545b2fabbb700de099&amp;type=3#Style" />
-    <ui:VisualElement name="Background" style="align-items: center; justify-content: center; height: 440px; width: 887px;">
-        <ui:VisualElement style="height: 256px; width: 243px; background-color: rgba(195, 242, 250, 0.86); -unity-background-image-tint-color: rgb(73, 73, 73); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; align-items: center; justify-content: center; color: rgb(27, 27, 27);">
-            <ui:Label text="Main Menu" display-tooltip-when-elided="true" enable-rich-text="false" style="position: absolute; top: 20px; -unity-font-style: bold; color: rgba(99, 74, 25, 255);" />
-            <ui:Button text="Start Game" display-tooltip-when-elided="true" name="StartButton" class="button-style" />
-            <ui:Button text="Log In" display-tooltip-when-elided="true" name="Login" class="button-style" />
-            <ui:Label text="Label" display-tooltip-when-elided="true" name="Errors" style="color: rgba(164, 41, 21, 255); display: none;" />
+    <ui:VisualElement name="Background" style="align-items: center; justify-content: center; height: 440px; width: 887px; position: absolute; flex-grow: 1; flex-direction: column;">
+        <ui:VisualElement style="height: 342px; width: 439px; background-color: rgba(195, 242, 250, 0.86); -unity-background-image-tint-color: rgb(73, 73, 73); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; align-items: center; justify-content: center; color: rgb(27, 27, 27);">
+            <ui:Label text="Main Menu" display-tooltip-when-elided="true" enable-rich-text="false" style="position: absolute; top: 20px; -unity-font-style: bold; color: rgb(99, 74, 25);" />
+            <ui:TextField picking-mode="Ignore" label="Email" value="filler text" text="your@email.com" name="EmailInput" is-delayed="true" password="false" style="margin-left: 0; margin-right: 0; height: 77px; width: 356px; align-items: center; justify-content: flex-end; margin-top: 0; margin-bottom: 0; flex-direction: row;" />
+            <ui:TextField picking-mode="Ignore" label="Password" value="filler text" text="password" name="PasswordInput" is-delayed="true" password="true" style="height: 40px; width: 356px;" />
+            <ui:Button text="Register" display-tooltip-when-elided="true" name="RegisterButton" class="button-style" />
+            <ui:Button text="Log In" display-tooltip-when-elided="true" name="LoginButton" class="button-style" />
+            <ui:Button text="Reset Password" display-tooltip-when-elided="true" name="ResetPasswordButton" enable-rich-text="false" class="button-style" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="Errors" style="color: rgb(164, 41, 21); display: none;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

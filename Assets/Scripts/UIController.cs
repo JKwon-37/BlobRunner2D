@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using PlayFab;
 using PlayFab.ClientModels;
+using Newtonsoft.Json;
 
 public class UIController : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class UIController : MonoBehaviour
     public PlayFabManager playfabManager;
 
     //start game ui
-    public Button startButton;
+    public Button registerButton;
     public Button loginButton;
+    public Button resetPasswordButton;
+
     public Label errorText;
 
     //end game ui
@@ -24,13 +27,15 @@ public class UIController : MonoBehaviour
     void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        startButton = root.Q<Button>("StartButton");
-        loginButton = root.Q<Button>("Login");
+        registerButton = root.Q<Button>("RegisterButton");
+        loginButton = root.Q<Button>("LoginButton");
+        resetPasswordButton = root.Q<Button>("ResetPasswordButton");
         errorText = root.Q<Label>("Errors");
 
-        if(startButton != null){
-            startButton.clicked += StartButtonPressed;
+        if(loginButton != null){
+            registerButton.clicked += RegisterButtonPressed;
             loginButton.clicked += LoginButtonPressed;
+            //resetPasswordButton.clicked += ResetPasswordButtonPressed;
         }
 
         replayButton = root.Q<Button>("Replay");
@@ -41,15 +46,27 @@ public class UIController : MonoBehaviour
             leaderboardButton.clicked += LeaderboardButtonPressed;
         }
         if(GameObject.Find("stats") != null){
+            Debug.Log("playfabManager should exist");
             playfabManager = GameObject.Find("stats").GetComponent<PlayFabManager>();
+            playfabManager.emailInput = root.Q<TextField>("EmailInput");
+            playfabManager.passwordInput = root.Q<TextField>("PasswordInput");
         }
     }
 
-    void StartButtonPressed()
+    void RegisterButtonPressed()
     {
-        SceneManager.LoadScene("Level_One");
+        var request = new RegisterPlayFabUserRequest();
+            request.Email = playfabManager.emailInput.text;
+            request.Password = playfabManager.passwordInput.text;
+        
+        Debug.Log(request);
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
+        //SceneManager.LoadScene("Level_One");
     }
 
+    void OnRegisterSuccess(RegisterPlayFabUserResult result){
+        errorText.text = "Registered and logged in, will redirect to start game";
+    }
     void LoginButtonPressed()
     {
         errorText.text = "Login button pressed";
