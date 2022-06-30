@@ -152,6 +152,7 @@ public class PlayerController : MonoBehaviour
     }
     public void GameOver(){
         playfabManager.SendLeaderboard(maxPlatform);
+        SceneManager.LoadScene("GameOver_Level");
     }
 
     public void Jump()
