@@ -54,4 +54,23 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Successful Leaderboard Update");
     }
+
+    public void GetLeaderboard()
+    {
+        var request = new GetLeaderboardRequest
+        {
+            StatisticName = "PlatformScore",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
+    }
+
+    void OnLeaderboardGet(GetLeaderboardResult result)
+    {
+        foreach (var item in result.Leaderboard)
+        {
+            Debug.Log($"{item.PlayFabId} {item.StatValue}");
+        }
+    }
 }

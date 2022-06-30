@@ -1,0 +1,19 @@
+.button-style:hover {
+    height: 29px;
+    width: 175px;
+    background-color: rgb(97, 217, 187);
+    color: rgba(56, 164, 239, 255);
+    -unity-font-style: bold;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.button-style {
+    height: 29px;
+    width: 175px;
+    background-color: rgb(129, 244, 180);
+    color: rgb(56, 164, 239);
+    -unity-font-style: bold;
+}
