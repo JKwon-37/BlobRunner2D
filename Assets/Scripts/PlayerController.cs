@@ -8,15 +8,29 @@ using PlayFab;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player movement")]
     public float speed = 5f;
     public float jumpSpeed = 8f;
     private float direction = 0f;
+    private bool facingRight = true;
     private Rigidbody2D player;
 
+    [Header("Is grounded")]
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask groundLayer;
-    private bool isTouchingGround;
+    private bool touchingGround;
+
+    [Header("Wall jump")]
+    public float wallJumpTime = 0.2f;
+    public float slideSpeed = 0.3f;
+    public float wallDistance = 0.5f;
+    private bool isWallSliding = false;
+    RaycastHit2D wallCheck;
+    private float jumpTime;
+
+    // Double jump
+    private bool doubleJump;
 
     //link animator component to player
     private Animator playerAnimation;
@@ -41,32 +55,70 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        direction = Input.GetAxis("Horizontal");
+        touchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer); // if radius of groundCheck overlaps with an obj with a ground layer, then true
+
+        // ------- Switch player direction --------
+        direction = Input.GetAxis("Horizontal"); 
         // Debug.Log(direction);
         
         if(direction > 0f)
         {
-            player.velocity = new Vector2(direction * speed, player.velocity.y);
-            transform.localScale = new Vector2(0.4114183f,0.4114183f);
+            facingRight = true;
+            transform.localScale = new Vector2(0.4114183f,0.4114183f);              // player is facing right   
             //transform.localScale = new Vector2(0.4114183f, 0.4114183f);
         } else if (direction < 0f)
         {
-            player.velocity = new Vector2(direction * speed, player.velocity.y);
-            transform.localScale = new Vector2(-0.4114183f,0.4114183f);
+            facingRight = false;
+            transform.localScale = new Vector2(-0.4114183f,0.4114183f);             // player is facing left
             //transform.localScale = new Vector2(-0.4114183f, 0.4114183f);
         } else
         {
-            player.velocity = new Vector2(0, player.velocity.y);
+            player.velocity = new Vector2(0, player.velocity.y);                    // player faces last direction faced
         }
 
-        if (Input.GetButtonDown("Jump") && isTouchingGround)
+        // -------- Move ---------
+        player.velocity = new Vector2(direction * speed, player.velocity.y);
+
+        //-------- Jump ----------
+
+        if (Input.GetButtonDown("Jump"))
         {
-            player.velocity = new Vector2(player.velocity.x, jumpSpeed);
+            if(touchingGround || isWallSliding || doubleJump)
+            {
+                Jump();
+                doubleJump = ! doubleJump;
+            }
         }
+
+        // --------- Wall stuff ---------
+        if (facingRight)
+        {
+                                        // Vector2 origin         // Vector2 direction    // float distance   //layer mask
+            wallCheck = Physics2D.Raycast(transform.position, new Vector2(wallDistance, 0), wallDistance, groundLayer);
+            // Debug.DrawRay(transform.position, new Vector2(wallDistance, 0), Color.black);
+        } else
+        {
+            wallCheck = Physics2D.Raycast(transform.position, new Vector2(-wallDistance, 0), wallDistance, groundLayer);
+            // Debug.DrawRay(transform.position, new Vector2(-wallDistance, 0), Color.black);
+        }
+
+        if (wallCheck && !touchingGround && direction != 0) // player must have all three, raycast hit a ground layer, not be grounded, and pressing the L/R key
+        {
+            isWallSliding = true;
+            // jumpTime = Time.time + wallJumpTime;  // give time for player to jump if they accidentally let go of L/R key too early
+        } else  // add this code as else if for jump time delay -->>>> (jumpTime < Time.time)
+        {
+            isWallSliding = false;
+        }
+
+        if(isWallSliding)
+        {
+            player.velocity = new Vector2(player.velocity.x, Mathf.Clamp(player.velocity.y, slideSpeed, float.MaxValue));
+        }
+        // -----End wall stuff -------
 
         playerAnimation.SetFloat("Speed", Mathf.Abs(player.velocity.x));
-        playerAnimation.SetBool("OnGround", isTouchingGround);
+        playerAnimation.SetBool("OnGround", touchingGround);
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
     }
 
@@ -99,5 +151,10 @@ public class PlayerController : MonoBehaviour
     }
     public void GameOver(){
         playfabManager.SendLeaderboard(maxPlatform);
+    }
+
+    public void Jump()
+    {
+        player.velocity = new Vector2(player.velocity.x, jumpSpeed);
     }
 }
