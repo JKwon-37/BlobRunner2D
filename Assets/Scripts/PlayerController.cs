@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
         playfabManager = GetComponent<PlayFabManager>();
+        fallDetector = GameObject.Find("FallDetector");
         respawnPoint = transform.position;
     }
 
