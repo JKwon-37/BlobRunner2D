@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 public class UIController : MonoBehaviour
 {
     //showing leaderboard things
+
     public PlayFabManager playfabManager;
 
     //start game ui
@@ -46,8 +47,8 @@ public class UIController : MonoBehaviour
             leaderboardButton.clicked += LeaderboardButtonPressed;
         }
         if(GameObject.Find("stats") != null){
-            Debug.Log("playfabManager should exist");
             playfabManager = GameObject.Find("stats").GetComponent<PlayFabManager>();
+            playfabManager.usernameInput = root.Q<TextField>("UsernameInput");
             playfabManager.emailInput = root.Q<TextField>("EmailInput");
             playfabManager.passwordInput = root.Q<TextField>("PasswordInput");
         }
@@ -58,19 +59,27 @@ public class UIController : MonoBehaviour
         var request = new RegisterPlayFabUserRequest();
             request.Email = playfabManager.emailInput.text;
             request.Password = playfabManager.passwordInput.text;
-        
-        Debug.Log(request);
+            request.Username = playfabManager.usernameInput.text;
+            request.DisplayName = playfabManager.usernameInput.text;
+        Debug.Log($"{request.Username} registered");
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
         //SceneManager.LoadScene("Level_One");
     }
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result){
         errorText.text = "Registered and logged in, will redirect to start game";
+        SceneManager.LoadScene("Level_One");
     }
+
+        void OnLoginSuccess(LoginPlayFabUserResult result){
+        errorText.text = "Registered and logged in, will redirect to start game";
+        SceneManager.LoadScene("Level_One");
     void LoginButtonPressed()
     {
-        errorText.text = "Login button pressed";
-        errorText.style.display = DisplayStyle.Flex;
+        var request = new LoginWithEmailAdressRequest();
+            request.Email = playfabManager.emailInput.text;
+            request.Password = playfabManager.passwordInput;
+        PlayFabClientAPI.LoginWithEmailAdressRequest(request, OnLoginSuccess, OnError);
     }
 
     void ReplayButtonPressed()

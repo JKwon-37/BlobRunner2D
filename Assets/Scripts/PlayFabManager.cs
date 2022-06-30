@@ -11,6 +11,8 @@ public class PlayFabManager : MonoBehaviour
     public TextField emailInput;
     public TextField passwordInput;
 
+    public TextField usernameInput;
+
     // Start is called before the first frame update
     void Start()
     {
