@@ -71,15 +71,17 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("Level_One");
     }
 
-        void OnLoginSuccess(LoginPlayFabUserResult result){
-        errorText.text = "Registered and logged in, will redirect to start game";
-        SceneManager.LoadScene("Level_One");
+    void OnLoginSuccess(LoginResult result){
+    errorText.text = "logged in, will redirect to start game";
+    SceneManager.LoadScene("Level_One");
+    }
     void LoginButtonPressed()
     {
-        var request = new LoginWithEmailAdressRequest();
+        var request = new LoginWithEmailAddressRequest();
             request.Email = playfabManager.emailInput.text;
-            request.Password = playfabManager.passwordInput;
-        PlayFabClientAPI.LoginWithEmailAdressRequest(request, OnLoginSuccess, OnError);
+            request.Password = playfabManager.passwordInput.text;
+            request.TitleId = "DC319";
+        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
     }
 
     void ReplayButtonPressed()
