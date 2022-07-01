@@ -42,6 +42,7 @@ public class TimerController : MonoBehaviour
 
     public void EndTimer()
     {
+        Debug.Log("EndTimer Called prematurely");
         timerGoing = false;
     }
 
