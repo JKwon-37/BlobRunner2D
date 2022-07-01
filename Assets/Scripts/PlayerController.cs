@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     //maxPlatform is for leaderboard things
     public PlayFabManager playfabManager;
-    private int maxPlatform = 0;
+    //timer things
 
     // Start is called before the first frame update
     void Start()
@@ -137,13 +137,11 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             respawnPoint = transform.position;
-            maxPlatform++;
         }
         else if(collision.tag =="PreviousLevel")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             respawnPoint = transform.position;
-            maxPlatform--;
         }
         else if(collision.tag == "GameOver")
         {
@@ -151,7 +149,8 @@ public class PlayerController : MonoBehaviour
         }
     }
     public void GameOver(){
-        playfabManager.SendLeaderboard(maxPlatform);
+        TimerController.instance.EndTimer();
+        playfabManager.SendLeaderboard(((int)TimerController.instance.elapsedTime));
         SceneManager.LoadScene("GameOver_Level");
     }
 
