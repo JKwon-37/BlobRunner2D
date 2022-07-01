@@ -21,11 +21,7 @@ public class JumpTutorial : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {}
-
-     void OnTriggerExit2D(Collider2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
         textObj.SetActive(false);
         Destroy(triggerObj);
