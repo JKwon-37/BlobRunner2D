@@ -5,7 +5,6 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     private float fallDelay = 1f;
-    private float destroyDelay = 5f;
 
     private Vector3 respawnPoint;
     public GameObject respawnPlatform;
