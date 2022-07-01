@@ -99,22 +99,23 @@ public class UIController : MonoBehaviour
 
     void ReplayButtonPressed()
     {
+        TimerController.instance.DestroyTimer();
         SceneManager.LoadScene("Preload_Level");
     }
 
     void LeaderboardButtonPressed()
     {
+        Debug.Log("Get Leaderboard button works");
         GetLeaderboard();
-        //errorText.style.display = DisplayStyle.Flex;
     }
 
     public void GetLeaderboard()
     {
         var request = new GetLeaderboardRequest
         {
-            StatisticName = "PlatformScore",
+            StatisticName = "Time",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
@@ -123,7 +124,7 @@ public class UIController : MonoBehaviour
     {
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log($"{item.PlayFabId} {item.StatValue}");
+            Debug.Log(item.PlayFabId + " " + item.StatValue);
         }
     }
 

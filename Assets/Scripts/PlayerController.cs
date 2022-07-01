@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
     }
     public void GameOver(){
         TimerController.instance.EndTimer();
-        playfabManager.SendLeaderboard(((int)TimerController.instance.elapsedTime));
+        playfabManager.SendLeaderboard((int) Math.Floor(TimerController.instance.elapsedTime));
         SceneManager.LoadScene("GameOver_Level");
     }
 
