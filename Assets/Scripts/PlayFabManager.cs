@@ -50,7 +50,7 @@ public class PlayFabManager : MonoBehaviour
                 new StatisticUpdate()
                 {
                     StatisticName = "Time",
-                    Value = score
+                    Value = 0 - score
                 }
             }
         };

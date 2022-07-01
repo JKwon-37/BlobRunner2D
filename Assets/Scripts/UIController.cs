@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class UIController : MonoBehaviour
     public Button resetPasswordButton;
 
     public Label errorText;
+    public Label titleLabel;
 
     //end game ui
     public Button replayButton;
@@ -111,6 +113,10 @@ public class UIController : MonoBehaviour
 
     public void GetLeaderboard()
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        leaderboardButton = root.Q<Button>("Leaderboard");
+        titleLabel = root.Q<Label>("GameOver");
+        titleLabel.text = "Leaderboard";
         var request = new GetLeaderboardRequest
         {
             StatisticName = "Time",
@@ -122,15 +128,21 @@ public class UIController : MonoBehaviour
 
     void OnLeaderboardGet(GetLeaderboardResult result)
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        errorText = root.Q<Label>("Errors");
+        errorText.text = "";
+        int counter = 1;
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log(item.PlayFabId + " " + item.StatValue);
+            errorText.text += counter + ". " + item.DisplayName + " " + Math.Abs(item.StatValue) + " \n";
+            counter++;
         }
     }
 
     void OnError(PlayFabError error)
     {
-        Debug.Log("Error while getting stats");
-        Debug.Log(error.GenerateErrorReport());
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        errorText = root.Q<Label>("Errors");
+        errorText.text = error.ErrorMessage;
     }
 }
