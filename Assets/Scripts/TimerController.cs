@@ -24,9 +24,9 @@ public class TimerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        timeCounter.text = "Time: 08:08.08";
+        timeCounter.text = "game-time";
         timerGoing = false;
-        if(timerGoing == false)
+        if(timerGoing == false && timeCounter.text == "game-time")
         {
             SceneManager.LoadScene("Level_One");
             BeginTimer();

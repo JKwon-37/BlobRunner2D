@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=d461998965fad4545b2fabbb700de099&amp;type=3#Style" />
+    <ui:VisualElement name="Background" style="align-items: flex-start; justify-content: flex-start; height: 100%; width: 100%; position: absolute; font-size: 20px; color: rgba(194, 255, 255, 255); -unity-text-outline-width: 0.1px; -unity-text-outline-color: rgba(2, 0, 0, 255); -unity-font-style: bold;">
+        <ui:Label text="Timer: 00:00:00" display-tooltip-when-elided="true" name="TimerText" />
+    </ui:VisualElement>
+</ui:UXML>
