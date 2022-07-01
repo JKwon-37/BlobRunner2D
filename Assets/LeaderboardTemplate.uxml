@@ -2,10 +2,10 @@
     <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=d461998965fad4545b2fabbb700de099&amp;type=3#Style" />
     <ui:VisualElement name="Background" style="align-items: center; justify-content: center; height: 440px; width: 887px;">
         <ui:VisualElement style="height: 256px; width: 243px; background-color: rgba(195, 242, 250, 0.86); -unity-background-image-tint-color: rgb(73, 73, 73); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; align-items: center; justify-content: center; color: rgb(27, 27, 27);">
-            <ui:Label text="GAME OVER" display-tooltip-when-elided="true" enable-rich-text="true" name="GameOver" style="position: absolute; top: 20px; -unity-font-style: bold; color: rgb(99, 74, 25);" />
-            <ui:Label display-tooltip-when-elided="true" name="Errors" enable-rich-text="false" style="color: rgb(164, 41, 21); display: flex;" />
-            <ui:Button text="Play Again" display-tooltip-when-elided="true" name="Replay" class="button-style" />
-            <ui:Button text="Get Leaderboard" display-tooltip-when-elided="false" name="Leaderboard" class="button-style" style="display: flex;" />
+            <ui:Label text="Leaderboard" display-tooltip-when-elided="true" enable-rich-text="true" name="Leaderboard" style="position: absolute; top: 20px; -unity-font-style: bold; color: rgb(99, 74, 25);" />
+            <ui:Label text="formatted" display-tooltip-when-elided="true" name="Formatted" enable-rich-text="false" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="Errors" style="color: rgb(164, 41, 21); display: none;" />
         </ui:VisualElement>
+        <ui:Button text="Play Again" display-tooltip-when-elided="true" name="Replay" enable-rich-text="false" class="button-style" style="-unity-text-align: middle-center; white-space: nowrap; align-items: center; justify-content: flex-end; margin-top: 14px; padding-left: 10px; padding-right: 10px;" />
     </ui:VisualElement>
 </ui:UXML>

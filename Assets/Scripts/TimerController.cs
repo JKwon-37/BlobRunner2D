@@ -42,8 +42,11 @@ public class TimerController : MonoBehaviour
 
     public void EndTimer()
     {
-        Debug.Log("EndTimer Called prematurely");
         timerGoing = false;
+    }
+
+    public void DestroyTimer(){
+        Destroy(GameObject.FindWithTag("Timer"));
     }
 
     private IEnumerator UpdateTimer()
@@ -61,9 +64,6 @@ public class TimerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        elapsedTime += Time.deltaTime;
-        timePlaying = TimeSpan.FromSeconds(elapsedTime);
-        string timePlayingStr = "Time: " + timePlaying.ToString("mm':'ss'.'ff");
-        timeCounter.text = timePlayingStr;
+
     }
 }

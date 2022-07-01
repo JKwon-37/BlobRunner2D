@@ -49,8 +49,8 @@ public class PlayFabManager : MonoBehaviour
             {
                 new StatisticUpdate()
                 {
-                    StatisticName = "PlatformScore",
-                    Value = score
+                    StatisticName = "Time",
+                    Value = 0 - score
                 }
             }
         };
@@ -66,9 +66,9 @@ public class PlayFabManager : MonoBehaviour
     {
         var request = new GetLeaderboardRequest
         {
-            StatisticName = "PlatformScore",
+            StatisticName = "Time",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
@@ -77,7 +77,7 @@ public class PlayFabManager : MonoBehaviour
     {
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log($"{item.PlayFabId} {item.StatValue}");
+            Debug.Log(item.PlayFabId + " " + item.StatValue);
         }
     }
 }

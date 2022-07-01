@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class UIController : MonoBehaviour
     public Button resetPasswordButton;
 
     public Label errorText;
+    public Label titleLabel;
 
     //end game ui
     public Button replayButton;
@@ -99,37 +101,48 @@ public class UIController : MonoBehaviour
 
     void ReplayButtonPressed()
     {
+        TimerController.instance.DestroyTimer();
         SceneManager.LoadScene("Preload_Level");
     }
 
     void LeaderboardButtonPressed()
     {
+        Debug.Log("Get Leaderboard button works");
         GetLeaderboard();
-        //errorText.style.display = DisplayStyle.Flex;
     }
 
     public void GetLeaderboard()
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        leaderboardButton = root.Q<Button>("Leaderboard");
+        titleLabel = root.Q<Label>("GameOver");
+        titleLabel.text = "Leaderboard";
         var request = new GetLeaderboardRequest
         {
-            StatisticName = "PlatformScore",
+            StatisticName = "Time",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
 
     void OnLeaderboardGet(GetLeaderboardResult result)
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        errorText = root.Q<Label>("Errors");
+        errorText.text = "";
+        int counter = 1;
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log($"{item.PlayFabId} {item.StatValue}");
+            errorText.text += counter + ". " + item.DisplayName + " " + Math.Abs(item.StatValue) + " \n";
+            counter++;
         }
     }
 
     void OnError(PlayFabError error)
     {
-        Debug.Log("Error while getting stats");
-        Debug.Log(error.GenerateErrorReport());
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        errorText = root.Q<Label>("Errors");
+        errorText.text = error.ErrorMessage;
     }
 }
