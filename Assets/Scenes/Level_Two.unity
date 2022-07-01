@@ -1306,6 +1306,7 @@ GameObject:
   - component: {fileID: 331798789}
   - component: {fileID: 331798791}
   - component: {fileID: 331798790}
+  - component: {fileID: 331798792}
   m_Layer: 6
   m_Name: NewGround
   m_TagString: Untagged
@@ -10205,6 +10206,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &331798792
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331798788}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: b1ec2842421b84246ba651b36f44fd90, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &361347503
 GameObject:
   m_ObjectHideFlags: 0
