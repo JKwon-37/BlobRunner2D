@@ -84,12 +84,12 @@ public class UIController : MonoBehaviour
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result){
         errorText.text = "Registered and logged in, will redirect to start game";
-        SceneManager.LoadScene("Level_One");
+        SceneManager.LoadScene("Preload_Level");
     }
 
     void OnLoginSuccess(LoginResult result){
         errorText.text = "logged in, will redirect to start game";
-        SceneManager.LoadScene("Level_One");
+        SceneManager.LoadScene("Preload_Level");
     }
 
     void OnResetPWSuccess(SendAccountRecoveryEmailResult result){
@@ -99,7 +99,7 @@ public class UIController : MonoBehaviour
 
     void ReplayButtonPressed()
     {
-        SceneManager.LoadScene("Level_One");
+        SceneManager.LoadScene("Preload_Level");
     }
 
     void LeaderboardButtonPressed()

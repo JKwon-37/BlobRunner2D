@@ -9,7 +9,7 @@ TagManager:
   - NextLevel
   - PreviousLevel
   - GameOver
-  - DestroyPlatform
+  - Timer
   layers:
   - Default
   - TransparentFX
